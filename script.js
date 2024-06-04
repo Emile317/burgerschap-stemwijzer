@@ -55,27 +55,53 @@ function toggleStandpunt(onderwerp, party) {
         standpuntElement.classList.add("hidden");
     }
 }
-const onderwerpDisplayNames = {"eu": "EU", "immigratie": "Immigratie", "inkomen": "Inkomen", "klimaat_en_milieu": "Klimaat en Milieu", "onderwijs": "Onderwijs", "pensioen": "Pensioen", "veiligheid_en_criminaliteit": "Veiligheid en Criminaliteit", "woonmarkt": "Woonmarkt"};
+const onderwerpDisplayNames = {
+    "eu": "EU", "immigratie": "Immigratie", "inkomen": "Inkomen", "klimaat_en_milieu": "Klimaat en Milieu", "onderwijs": "Onderwijs",
+    "pensioen": "Pensioen", "veiligheid_en_criminaliteit": "Veiligheid en Criminaliteit", "woonmarkt": "Woonmarkt"
+};
 
 const openedOnderwerp = document.getElementById("openedOnderwerp");
-const mainElement = document.querySelector("main");
-const onderwerpButtonsDiv = elementSetup("div", mainElement, false, false, false, false, "-order-1 bg-red rounded-lg divide-x divide-gray")
+const onderwerpButtonsDiv = elementSetup(
+    "div", document.getElementById("mainContent"), false, false, false, false,
+    "-order-1 bg-red rounded-lg divide-x divide-gray"
+)
 for (const onderwerp in standpunten) {
-    elementSetup("button", onderwerpButtonsDiv, false, onderwerpDisplayNames[onderwerp], ["name"], [onderwerp], "p-2")
+    elementSetup(
+        "button", onderwerpButtonsDiv, false, onderwerpDisplayNames[onderwerp],
+        ["name"], [onderwerp], "p-2 font-bold text-white"
+    )
         .addEventListener("click", function() {
             changeCurrentOnderwerp(onderwerp);
         })
 
-    let onderwerpDiv = elementSetup("div", openedOnderwerp, onderwerp, false, false, false, "hidden flex flex-col items-center");
-    elementSetup("h2", onderwerpDiv, false, onderwerpDisplayNames[onderwerp], false, false, "text-4xl font-bold");
-    const partyDivsDiv = elementSetup("div", onderwerpDiv, false, false, false, false, "flex items-start flex-wrap");
+    let onderwerpDiv = elementSetup(
+        "div", openedOnderwerp, onderwerp, false, false, false,
+        "hidden flex flex-col items-center"
+    );
+    elementSetup(
+        "h2", onderwerpDiv, false, onderwerpDisplayNames[onderwerp], false, false,
+        "text-4xl font-bold mb-2"
+    );
+    const partyDivsDiv = elementSetup(
+        "div", onderwerpDiv, false, false, false, false,
+        "flex items-start flex-wrap"
+    );
     for (const standpunt of standpunten[onderwerp]) {
-        let partyDiv = elementSetup("div", partyDivsDiv, false, false, false, false, "flex flex-col items-center divide-y bg-red-400 rounded-lg max-w-40 min-h-[4.5rem] m-0.5 bg-darkred")
+        let partyDiv = elementSetup(
+            "div", partyDivsDiv, false, false, false, false,
+            "flex flex-col items-center divide-y rounded-lg max-w-40 min-h-[4.5rem] m-0.5 bg-gray"
+        )
 
-        elementSetup("button", partyDiv, false, standpunt.partij, false, false, "bg-red-400 rounded-lg min-w-40 min-h-[4.5rem]")
+        elementSetup(
+            "button", partyDiv, false, standpunt.partij, false, false,
+            "bg-red-400 rounded-lg min-w-40 min-h-[4.5rem]"
+        )
             .addEventListener("click", function() {
                 toggleStandpunt(onderwerp, standpunt.partij);
             })
-        elementSetup("p", partyDiv, `${onderwerp}:${standpunt.partij}`, standpunt.standpunt, false, false, "hidden break-all hyphens-auto m-2");
+        elementSetup(
+            "p", partyDiv, `${onderwerp}:${standpunt.partij}`, standpunt.standpunt, false, false,
+            "hidden break-all hyphens-auto m-2"
+        );
     }
 }
